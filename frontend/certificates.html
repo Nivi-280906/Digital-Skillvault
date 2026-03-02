@@ -1,54 +1,85 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>My Certificates</title>
-<link rel="stylesheet" href="dashboard.css">
-<link rel="stylesheet" href="certificates.css">
+  <meta charset="UTF-8">
+  <title>My Certificates</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="certificates.css">
+  <link rel="icon" href="data:,">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
 <div class="layout">
 
-<aside class="sidebar">
-<h2>SkillVault</h2>
+  <aside class="sidebar">
 
-<nav>
-<a href="dashboard.html">Dashboard</a>
-<a class="active">My Certificates</a>
-<a>Share Portfolio</a>
-<a>Settings</a>
-</nav>
+  <h2 class="logo">SkillVault</h2>
 
-<div class="bottom">
-<a onclick="logout()">Sign Out</a>
-</div>
+  <nav class="menu">
+    <a href="dashboard.html">Dashboard</a>
+
+    <a href="certificates.html" class="active">
+      My Certificates
+    </a>
+
+    <a onclick="openPortfolio()">
+      Share Portfolio
+    </a>
+
+    <a href="settings.html">
+      Settings
+    </a>
+  </nav>
+
+  <!-- THIS CLASS NAME MUST BE "bottom" -->
+  <div class="bottom">
+    <a onclick="logout()">Sign Out</a>
+  </div>
+
 </aside>
 
-<main>
 
-<h1>My Certificates</h1>
+  <!-- MAIN -->
+  <main>
+    <h1>My Certificates</h1>
+    <p class="subtitle">Your uploaded certificates</p>
 
-<div id="certContainer" class="cert-grid"></div>
+    <!-- Search + Filter -->
+    <div class="top-controls">
+      <input type="text" id="searchInput" placeholder="Search certificates...">
+      <select id="statusFilter">
+        <option value="all">All</option>
+        <option value="verified">Verified</option>
+        <option value="rejected">Rejected</option>
+        <option value="processing">Processing</option>
+      </select>
+    </div>
 
-</main>
+    <!-- Certificates Grid -->
+    <div id="certContainer" class="cert-grid"></div>
+  </main>
+
 </div>
 
-<!-- VIEW MODAL -->
-<div id="viewModal" class="view-modal">
-<div class="view-box">
-<span class="close-btn" onclick="closeViewer()">×</span>
-<iframe id="certFrame"></iframe>
-</div>
+<!-- PDF MODAL -->
+<div id="pdfModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">×</span>
+    <iframe id="pdfFrame"></iframe>
+  </div>
 </div>
 
+<!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
 <script src="firebase.js"></script>
 <script src="certificates.js"></script>
+<script src="theme.js"></script>
 
 </body>
 </html>

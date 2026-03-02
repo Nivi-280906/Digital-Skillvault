@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Settings | SkillVault</title>
+<link rel="stylesheet" href="settings.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="layout">
+
+<!-- SIDEBAR (UNCHANGED) -->
+<div class="sidebar">
+<h2>SkillVault</h2>
+
+<nav>
+<a href="dashboard.html">Dashboard</a>
+<a href="certificates.html">My Certificates</a>
+<a href="portfolio.html">Share Portfolio</a>
+<a href="settings.html" class="active">Settings</a>
+</nav>
+
+<div class="bottom">
+<a onclick="logout()">Sign Out</a>
+</div>
+</div>
+
+
+<!-- MAIN CONTENT -->
+<main>
+
+<h1 class="title">Settings</h1>
+<p class="subtitle">Manage your SkillVault certificate preferences</p>
+
+<div class="settings-card">
+
+<!-- Recycle Bin -->
+<div class="setting-row">
+<div>
+<div class="setting-title">Recycle Bin Protection</div>
+<div class="setting-desc">
+Move deleted certificates to recycle bin
+</div>
+</div>
+
+<label class="switch">
+<input type="checkbox" id="recycleBin">
+<span class="slider"></span>
+</label>
+</div>
+
+<!-- Confirm Delete -->
+<div class="setting-row">
+<div>
+<div class="setting-title">Confirm Before Delete</div>
+<div class="setting-desc">
+Show confirmation popup before deleting certificate
+</div>
+</div>
+
+<label class="switch">
+<input type="checkbox" id="confirmDelete">
+<span class="slider"></span>
+</label>
+</div>
+
+<!-- Backup -->
+<div class="setting-row">
+<div>
+<div class="setting-title">Backup Certificates</div>
+<div class="setting-desc">
+Download all certificates backup
+</div>
+</div>
+
+<button class="backup-btn" id="backupBtn">
+Backup
+</button>
+</div>
+
+</div>
+
+</main>
+</div>
+
+<script src="settings.js"></script>
+</body>
+</html>

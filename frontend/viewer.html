@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Certificate Viewer | SkillVault</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family:Inter,Segoe UI,Arial,sans-serif;
+    background:#f1f5f9;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.viewer-card{
+    width:820px;
+    background:white;
+    border-radius:14px;
+    box-shadow:0 8px 30px rgba(0,0,0,0.08);
+    padding:30px;
+}
+
+.header{
+    font-size:22px;
+    font-weight:600;
+    margin-bottom:20px;
+}
+
+.login-section{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:40px 0;
+}
+
+.google-btn{
+    padding:10px 20px;
+    border-radius:8px;
+    border:1px solid #dadce0;
+    background:white;
+    cursor:pointer;
+}
+
+.user-info{
+    background:#f8fafc;
+    padding:10px;
+    border-radius:6px;
+    margin-bottom:10px;
+}
+
+.action-btn{
+    padding:8px 14px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    color:white;
+    margin-right:10px;
+}
+
+.download-btn{
+    background:#16a34a;
+}
+
+.upload-btn{
+    background:#2563eb;
+}
+
+iframe{
+    width:100%;
+    height:600px;
+    border:none;
+    border-radius:8px;
+    margin-top:15px;
+}
+
+.error{
+    color:red;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="viewer-card">
+
+<div class="header">Certificate Viewer</div>
+
+<div id="status"></div>
+
+<div id="controls"></div>
+
+<div id="certificateContainer"></div>
+
+</div>
+
+
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+
+<script src="firebase.js"></script>
+
+<script>
+
+const db = firebase.firestore();
+const auth = firebase.auth();
+const storage = firebase.storage();
+
+const params = new URLSearchParams(window.location.search);
+const certId = params.get("cert");
+
+if(!certId)
+{
+    showError("Invalid certificate link");
+}
+else
+{
+    checkLogin();
+}
+
+
+/* LOGIN CHECK */
+
+function checkLogin()
+{
+    auth.onAuthStateChanged(user =>
+    {
+        if(user)
+            openCertificate(user);
+        else
+            showLoginUI();
+    });
+}
+
+
+/* LOGIN UI */
+
+function showLoginUI()
+{
+    document.getElementById("status").innerHTML =
+    `
+    <div class="login-section">
+
+        <p>Sign in to view this certificate</p>
+
+        <button class="google-btn" onclick="loginGoogle()">
+            Continue with Google
+        </button>
+
+    </div>
+    `;
+}
+
+
+/* GOOGLE LOGIN */
+
+async function loginGoogle()
+{
+    const provider = new firebase.auth.GoogleAuthProvider();
+    const result = await auth.signInWithPopup(provider);
+    openCertificate(result.user);
+}
+
+
+/* OPEN CERTIFICATE */
+
+async function openCertificate(user)
+{
+
+    const certDoc =
+    await db.collection("certificates")
+    .doc(certId)
+    .get();
+
+    if(!certDoc.exists)
+    {
+        showError("Certificate not found");
+        return;
+    }
+
+    const fileURL = certDoc.data().file;
+
+
+    /* GET ACCESS LEVEL */
+
+    const shareDoc =
+    await db.collection("certificateShares")
+    .doc(certId)
+    .get();
+
+    let accessLevel="view";
+
+    if(shareDoc.exists)
+    {
+        const data=shareDoc.data();
+
+        if(user.uid===data.ownerUid)
+            accessLevel="edit";
+        else
+            accessLevel=data.accessLevel||"view";
+    }
+
+
+    /* SHOW STATUS */
+
+    document.getElementById("status").innerHTML=
+    `
+    <div class="user-info">
+
+        Signed in as ${user.email}
+
+        <span style="
+        margin-left:10px;
+        padding:3px 8px;
+        background:${accessLevel==="edit" ? "#dcfce7" : "#e2e8f0"};
+        border-radius:5px;
+        font-size:12px;
+        ">
+        ${accessLevel==="edit" ? "Can edit" : "Can view"}
+        </span>
+
+    </div>
+    `;
+
+
+    /* EDIT MODE */
+
+    if(accessLevel==="edit")
+    {
+        showEditControls(fileURL);
+
+        // OPEN FULL PDF VIEWER AUTOMATICALLY
+        window.open(fileURL, "_blank");
+
+        document.getElementById("certificateContainer").innerHTML=
+        `
+        <div style="padding:20px;color:#16a34a;">
+        Certificate opened in edit mode in new tab.
+        </div>
+        `;
+    }
+
+    else
+    {
+        // VIEW MODE PREVIEW
+        document.getElementById("certificateContainer").innerHTML=
+        `<iframe src="${fileURL}#toolbar=0"></iframe>`;
+    }
+
+
+    saveViewer(user);
+}
+
+
+/* EDIT CONTROLS */
+
+function showEditControls(fileURL)
+{
+    document.getElementById("controls").innerHTML=
+    `
+    <button class="action-btn download-btn"
+    onclick="window.open('${fileURL}','_blank')">
+    Download
+    </button>
+
+    <button class="action-btn upload-btn"
+    onclick="document.getElementById('uploadFile').click()">
+    Upload New Version
+    </button>
+
+    <input type="file"
+    id="uploadFile"
+    style="display:none"
+    onchange="uploadCertificate(event)">
+    `;
+}
+
+
+/* UPLOAD NEW VERSION */
+
+async function uploadCertificate(event)
+{
+
+    const file=event.target.files[0];
+
+    if(!file) return;
+
+    alert("Uploading new version...");
+
+    const ref=storage.ref("certificates/"+certId);
+
+    await ref.put(file);
+
+    const url=await ref.getDownloadURL();
+
+    await db.collection("certificates")
+    .doc(certId)
+    .update({ file:url });
+
+    alert("Certificate updated");
+
+    location.reload();
+}
+
+
+/* SAVE VIEWER */
+
+async function saveViewer(user)
+{
+    const ref=db.collection("certificateViews")
+    .doc(certId+"_"+user.uid);
+
+    const doc=await ref.get();
+
+    if(doc.exists)
+    {
+        ref.update({
+            viewCount:firebase.firestore.FieldValue.increment(1),
+            lastViewed:firebase.firestore.FieldValue.serverTimestamp()
+        });
+    }
+    else
+    {
+        ref.set({
+            certId,
+            viewerUid:user.uid,
+            viewerEmail:user.email,
+            viewCount:1,
+            lastViewed:firebase.firestore.FieldValue.serverTimestamp()
+        });
+    }
+}
+
+
+/* ERROR */
+
+function showError(msg)
+{
+    document.getElementById("status").innerHTML=
+    `<div class="error">${msg}</div>`;
+}
+
+</script>
+
+</body>
+</html>

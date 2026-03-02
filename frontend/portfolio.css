@@ -1,0 +1,875 @@
+/* ===============================
+GLOBAL
+=============================== */
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:'Inter',sans-serif;
+}
+
+body{
+    background:#f1f5f9;
+}
+
+
+/* ===============================
+PORTFOLIO CONTAINER
+=============================== */
+
+.portfolio-container{
+    padding:25px;
+}
+
+
+/* ===============================
+CERTIFICATE CARD
+=============================== */
+
+.cert-card{
+
+    background:#ffffff;
+
+    border-radius:14px;
+
+    padding:20px;
+
+    margin-bottom:16px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    box-shadow:0 4px 12px rgba(0,0,0,0.06);
+
+    transition:all 0.25s ease;
+}
+
+.cert-card:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 10px 24px rgba(0,0,0,0.12);
+}
+
+
+/* ===============================
+LEFT SECTION
+=============================== */
+
+.cert-left{
+
+    display:flex;
+
+    gap:16px;
+
+    align-items:flex-start;
+}
+
+
+/* ICON */
+
+.cert-icon{
+
+    width:50px;
+    height:50px;
+
+    border-radius:12px;
+
+    background:#e0edff;   /* soft blue background */
+
+    color:#2563eb;        /* professional blue icon */
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:22px;
+    font-weight:bold;
+}
+
+
+/* INFO SECTION */
+
+.cert-info{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:6px;
+}
+
+
+/* ===============================
+TITLE + VERIFIED ROW
+=============================== */
+
+.cert-header{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+}
+
+.cert-title{
+
+    font-size:17px;
+
+    font-weight:600;
+
+    color:#0f172a;
+}
+
+
+/* ===============================
+TAGS ROW
+=============================== */
+
+.cert-tags{
+
+    display:flex;
+
+    gap:8px;
+
+    flex-wrap:wrap;
+}
+
+/* ===============================
+PROFESSIONAL LEVEL BADGES
+=============================== */
+
+.tag{
+
+    padding:4px 10px;
+
+    border-radius:999px;
+
+    font-size:12px;
+
+    font-weight:600;
+
+    line-height:1;
+
+}
+/* Beginner — clean green */
+.level-beginner{
+
+    background:#ecfdf5;
+
+    color:#059669;
+
+    border:1px solid #a7f3d0;
+
+}
+
+
+/* Intermediate — clean amber */
+.level-intermediate{
+
+    background:#fffbeb;
+
+    color:#d97706;
+
+    border:1px solid #fde68a;
+
+}
+
+
+/* Advanced — clean red */
+.level-advanced{
+
+    background:#fef2f2;
+
+    color:#dc2626;
+
+    border:1px solid #fecaca;
+
+}
+
+/* ===============================
+SHARE BUTTON
+=============================== */
+
+.share-btn{
+
+    background:#e0edff;   /* light blue background */
+
+    color:#2563eb;        /* blue text */
+
+    border:none;
+
+    padding:10px 22px;
+
+    border-radius:10px;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:all 0.2s ease;
+}
+
+
+/* Hover effect */
+
+.share-btn:hover{
+
+    background:#c7dcff;   /* slightly darker light blue */
+
+    color:#1d4ed8;
+
+}
+
+.share-btn:hover{
+
+    background:#1e40af;   /* darker on hover */
+
+    transform:translateY(-1px);
+
+    box-shadow:0 4px 10px rgba(0,0,0,0.15);
+}
+
+
+/* ===============================
+EMPTY STATE
+=============================== */
+
+.empty{
+
+    background:white;
+
+    padding:30px;
+
+    text-align:center;
+
+    border-radius:12px;
+
+    color:#64748b;
+
+    box-shadow:0 4px 12px rgba(0,0,0,0.06);
+}
+
+
+/* ===============================
+SHARE MODAL
+=============================== */
+
+/* MODAL BACKGROUND */
+
+.share-modal{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.4);
+    display:none;
+    justify-content:center;
+    align-items:center;
+}
+
+.share-modal.show{
+    display:flex;
+}
+
+
+/* ===============================
+BIGGER SHARE MODAL BOX
+=============================== */
+
+.share-box{
+
+    width:600px;          /* increased from 460px */
+
+    max-width:90%;        /* responsive */
+
+    padding:30px;         /* more spacing */
+
+    border-radius:16px;
+
+    background:white;
+
+    box-shadow:0 20px 50px rgba(0,0,0,0.25);
+
+    position:relative;
+
+}
+
+/* HEADER */
+
+.share-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:18px;
+}
+
+.close-btn{
+
+    width:32px;
+    height:32px;
+
+    border:none;
+
+    background:#f1f5f9;
+
+    color:#0f172a;
+
+    font-size:18px;
+
+    font-weight:600;
+
+    border-radius:6px;
+
+    cursor:pointer;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    transition:0.2s;
+}
+
+.close-btn:hover{
+
+    background:#e2e8f0;
+
+}
+
+
+/* LINK */
+
+.share-link-row{
+    display:flex;
+    gap:10px;
+    margin-bottom:16px;
+}
+
+.share-link-row input{
+    flex:1;
+    padding:10px;
+    border-radius:8px;
+    border:1px solid #ccc;
+}
+
+.copy-btn{
+
+    background:#e0edff;
+
+    color:#2563eb;
+
+    border:1px solid #bfdbfe;
+
+    padding:10px 18px;
+
+    border-radius:10px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:0.2s;
+
+}
+
+.copy-btn:hover{
+
+    background:#c7dcff;
+
+    color:#1d4ed8;
+
+}
+
+
+/* SHARE BUTTONS */
+
+.share-buttons{
+    display:flex;
+    gap:10px;
+    margin-bottom:18px;
+}
+
+.share-option{
+    flex:1;
+    padding:10px;
+    border-radius:8px;
+    border:1px solid #ddd;
+    background:white;
+    cursor:pointer;
+}
+
+.share-option.linkedin{
+    border-color:#0a66c2;
+    color:#0a66c2;
+}
+
+.share-option.whatsapp{
+    border-color:#25D366;
+    color:#25D366;
+}
+
+
+/* ACCESS */
+
+.access-row{
+    margin-bottom:16px;
+}
+
+/* ACCESS LEVEL LABEL */
+
+.access-row label{
+
+    font-size:15px;          /* increased size */
+
+    font-weight:500;
+
+    color:#334155;           /* light theme */
+
+}
+.access-row select{
+    width:100%;
+    margin-top:6px;
+    padding:8px;
+    border-radius:8px;
+}
+
+
+/* VIEWERS */
+
+.viewer-section{
+    border-top:1px solid #eee;
+    padding-top:12px;
+}
+
+.viewer-section h4{
+    margin-bottom:8px;
+}
+
+#viewerList li{
+    padding:6px 0;
+    font-size:14px;
+}
+.share-modal{
+    display:none;
+}
+
+.share-modal.show{
+    display:flex;
+}
+/* ===============================
+PROFESSIONAL DARK THEME (FIXED)
+=============================== */
+
+body.dark{
+    background:#020617;
+    color:#e2e8f0;
+}
+
+
+/* Certificate Card */
+body.dark .cert-card{
+
+    background:linear-gradient(145deg,#0f172a,#111827);
+
+    border:1px solid #1f2937;
+
+    box-shadow:0 8px 25px rgba(0,0,0,0.5);
+
+}
+
+
+/* Title */
+body.dark .cert-title{
+    color:#f8fafc;
+}
+
+
+body.dark .cert-icon{
+
+    background:#1e293b;   /* soft slate */
+
+    color:#60a5fa;        /* soft blue icon */
+
+    border:1px solid #334155;
+
+    box-shadow:none;
+
+}
+
+
+/* Tags */
+body.dark .tag{
+
+    background:#1e293b;
+
+    color:#cbd5e1;
+
+    border:1px solid #334155;
+
+}
+/* DARK MODE LEVEL COLORS */
+
+/* ===============================
+DARK THEME LEVEL BADGES
+=============================== */
+
+/* Beginner */
+body.dark .level-beginner{
+
+    background:#052e1b;      /* deep green */
+
+    color:#4ade80;           /* bright green text */
+
+    border:1px solid #166534;
+
+}
+
+
+/* Intermediate */
+body.dark .level-intermediate{
+
+    background:#3f2f05;      /* deep amber */
+
+    color:#facc15;           /* bright yellow */
+
+    border:1px solid #854d0e;
+
+}
+
+
+/* Advanced */
+body.dark .level-advanced{
+
+    background:#3f0a0a;      /* deep red */
+
+    color:#f87171;           /* soft red text */
+
+    border:1px solid #991b1b;
+
+}
+
+/* Verified badge */
+body.dark .status-verified{
+
+    background:#052e1b;
+
+    color:#4ade80;
+
+    border:1px solid #166534;
+
+    padding:4px 10px;
+
+    border-radius:999px;
+
+    font-size:12px;
+
+    font-weight:600;
+
+    line-height:1;
+
+}
+
+body.dark .share-btn{
+
+    background:#1e293b;
+
+    color:#60a5fa;
+
+    border:1px solid #334155;
+
+    box-shadow:none;
+
+}
+
+body.dark .share-btn:hover{
+
+    background:#334155;
+
+    color:#93c5fd;
+
+}
+
+
+body.dark .share-box{
+
+    width:600px;
+
+    max-width:90%;
+
+    padding:30px;
+
+    background:#0f172a;
+
+    border:1px solid #1e293b;
+
+}
+
+/* Close button */
+body.dark .close-btn{
+
+    background:#1e293b;
+
+    color:#e2e8f0;
+
+}
+
+body.dark .close-btn:hover{
+
+    background:#334155;
+
+}
+
+
+/* Inputs */
+body.dark input,
+body.dark select{
+
+    background:#020617;
+
+    border:1px solid #334155;
+
+    color:#e2e8f0;
+
+}
+
+
+/* FIX EMAIL BUTTON TEXT VISIBILITY */
+
+body.dark .share-option{
+
+    background:#020617;
+
+    color:#e2e8f0;      /* FIX: light text */
+
+    border:1px solid #334155;
+
+}
+
+/* HOVER */
+
+body.dark .share-option:hover{
+
+    background:#1e293b;
+
+    color:#f8fafc;
+
+}
+
+
+/* Viewer section */
+body.dark .viewer-section{
+
+    border-top:1px solid #1e293b;
+
+}
+body.dark .copy-btn{
+
+    background:#1e293b;      /* soft dark */
+
+    color:#60a5fa;           /* soft blue text */
+
+    border:1px solid #334155;
+
+}
+
+body.dark .copy-btn:hover{
+
+    background:#334155;
+
+    color:#93c5fd;
+
+}
+body.dark .access-row label{
+
+    font-size:15px;
+
+    font-weight:600;
+
+    color:#e2e8f0;           /* more visible */
+
+}
+/* ===============================
+OWNER + VIEWERS PROFESSIONAL STYLE
+=============================== */
+
+/* Owner ID box */
+.owner-id{
+
+    margin-top:6px;
+
+    padding:10px;
+
+    border-radius:8px;
+
+    background:#f1f5f9;
+
+    font-size:14px;
+
+    font-weight:500;
+
+    color:#0f172a;
+
+}
+
+
+/* Viewer list items */
+#viewerList{
+
+    margin-top:6px;
+
+    padding-left:0;
+
+}
+
+#viewerList li{
+
+    list-style:none;
+
+    padding:10px;
+
+    margin-bottom:6px;
+
+    border-radius:8px;
+
+    background:#f1f5f9;
+
+    font-size:14px;
+
+    color:#0f172a;
+
+}
+
+
+/* ===============================
+DARK THEME SUPPORT
+=============================== */
+
+body.dark .owner-id{
+
+    background:#020617;
+
+    border:1px solid #334155;
+
+    color:#e2e8f0;
+
+}
+
+body.dark #viewerList li{
+
+    background:#020617;
+
+    border:1px solid #334155;
+
+    color:#e2e8f0;
+
+}
+/* ===============================
+VIEWER DROPDOWN STYLE (REQUIRED)
+=============================== */
+
+.viewer-item{
+    list-style:none;
+    margin-bottom:8px;
+}
+
+
+/* Clickable email row */
+.viewer-header{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:10px;
+
+    background:#f1f5f9;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-weight:500;
+
+    transition:0.2s;
+
+}
+
+/* Hover */
+.viewer-header:hover{
+    background:#e2e8f0;
+}
+
+
+/* Arrow icon */
+.arrow{
+    font-size:12px;
+    color:#64748b;
+    transition:0.2s;
+}
+
+
+/* Dropdown content */
+.viewer-details{
+
+    display:none;
+
+    padding:10px;
+
+    margin-top:5px;
+
+    margin-left:10px;
+
+    border-left:3px solid #2563eb;
+
+    font-size:13px;
+
+    color:#475569;
+
+    background:#f8fafc;
+
+    border-radius:6px;
+
+}
+
+
+/* ===============================
+DARK THEME DROPDOWN
+=============================== */
+
+body.dark .viewer-header{
+
+    background:#020617;
+
+    border:1px solid #334155;
+
+    color:#e2e8f0;
+
+}
+
+body.dark .viewer-header:hover{
+
+    background:#1e293b;
+
+}
+
+body.dark .viewer-details{
+
+    background:#020617;
+
+    border-left:3px solid #60a5fa;
+
+    color:#94a3b8;
+
+}

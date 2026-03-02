@@ -1,186 +1,566 @@
+/*************************
+ DOM ELEMENTS
+*************************/
+
+const userName = document.getElementById("userName");
+const userEmail = document.getElementById("userEmail");
+
+const totalCerts = document.getElementById("totalCerts");
+const verified = document.getElementById("verified");
+const skills = document.getElementById("skills");
+const learningStatus = document.getElementById("learningStatus");
+
+const certList = document.getElementById("certList");
+
+const avatarImg = document.getElementById("avatarImg");
+const avatarFallback = document.getElementById("avatarFallback");
+
+const settingsBox = document.getElementById("settingsBox");
+const uploadFrameModal = document.getElementById("uploadFrameModal");
+
+const editModal = document.getElementById("editModal");
+const editName = document.getElementById("editName");
+
+const dashboardSearch = document.getElementById("dashboardSearch");
+
+let allCertificates = [];
+let strengthChart = null;
+
+
+/*************************
+ FIREBASE
+*************************/
+
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-/* ================= AUTH ================= */
 
-auth.onAuthStateChanged(user => {
+/*************************
+ AUTH STATE
+*************************/
 
-  if(!user){
-    location.href = "login.html";
-    return;
-  }
+auth.onAuthStateChanged(user =>
+{
 
-  userName.innerText = user.displayName || "Student";
-  userEmail.innerText = user.email;
+if (!user)
+{
+location.href = "login.html";
+return;
+}
 
-  if(user.photoURL){
-    avatarImg.src = user.photoURL;
-    avatarImg.style.display = "flex";
-    avatarFallback.style.display = "none";
-  }else{
-    avatarFallback.innerText = user.email[0].toUpperCase();
-    avatarFallback.style.display = "flex";
-    avatarImg.style.display = "none";
-  }
+userName.innerText = user.displayName || "Student";
+userEmail.innerText = user.email;
 
-  strengthBar.style.width = "0%";
-  strengthBar.style.background = "#d1d5db";
-  strengthText.innerText = "0%";
 
-  updateLearningStatus();
-  loadCertificates(user.uid);
+/* avatar */
+
+if (user.photoURL)
+{
+avatarImg.src = user.photoURL;
+avatarImg.style.display = "block";
+avatarFallback.style.display = "none";
+}
+else
+{
+avatarFallback.innerText =
+user.email[0].toUpperCase();
+
+avatarFallback.style.display = "flex";
+avatarImg.style.display = "none";
+}
+
+
+updateLearningStatus(user.uid);
+loadCertificates(user.uid);
+
 });
 
-/* ================= LEARNING STATUS ================= */
 
-function updateLearningStatus(){
+/*************************
+ LEARNING STATUS
+*************************/
 
-  const today = new Date().toDateString();
-  const lastVisit = localStorage.getItem("lastVisit");
+function updateLearningStatus(uid)
+{
 
-  if(lastVisit === today){
-    learningStatus.innerText = "Active";
-    learningStatus.className = "status-active";
-  }else{
-    learningStatus.innerText = "Inactive";
-    learningStatus.className = "status-inactive";
-  }
+const today = new Date().toDateString();
 
-  localStorage.setItem("lastVisit", today);
+db.collection("certificates")
+.where("uid","==",uid)
+.onSnapshot(snapshot =>
+{
+
+let activeToday = false;
+
+snapshot.forEach(doc =>
+{
+
+const d = doc.data();
+
+if (!d.createdAt) return;
+
+const uploadDate =
+d.createdAt.toDate().toDateString();
+
+if (uploadDate === today)
+activeToday = true;
+
+});
+
+learningStatus.innerText =
+activeToday ? "Active" : "Inactive";
+
+learningStatus.className =
+activeToday ? "status-active" : "status-inactive";
+
+});
+
 }
 
-/* ================= LOAD CERTIFICATES ================= */
 
-function loadCertificates(uid){
+/*************************
+ LOAD CERTIFICATES
+*************************/
 
-  db.collection("certificates")
-  .where("uid","==",uid)
-  .onSnapshot(snapshot => {
+function loadCertificates(uid)
+{
 
-    let verifiedCount = 0;
-    let skillsSet = new Set();
+db.collection("certificates")
+.where("uid","==",uid)
+.onSnapshot(snapshot =>
+{
 
-    certList.innerHTML = "";
+let totalCount = 0;
+let verifiedCount = 0;
+let skillsSet = new Set();
 
-    snapshot.forEach(doc => {
+allCertificates = [];
 
-      const d = doc.data();
+snapshot.forEach(doc =>
+{
 
-      if(d.verified === true) verifiedCount++;
-      if(d.skill) skillsSet.add(d.skill);
+const d = doc.data();
 
-      const date = d.createdAt?.toDate().toLocaleDateString() || "";
-      const levelClass = (d.level || "").toLowerCase();
+totalCount++;
 
-      // IMPORTANT: upload.js saves as "file"
-      const fileUrl = d.file || "";
+if (d.verified === true || d.status === "verified")
+verifiedCount++;
 
-      certList.innerHTML += `
-      <div class="cert-row" onclick="openCert('${fileUrl}')">
+if (d.skill)
+skillsSet.add(d.skill);
 
-        <div class="cert-left">
-          <div class="cert-icon">📄</div>
+allCertificates.push(d);
 
-          <div>
-            <div class="cert-title">${d.title || "Certificate"}</div>
+});
 
-            <div class="cert-tags">
-              <span class="tag">${d.skill || ""}</span>
-              <span class="tag ${levelClass}">${d.level || ""}</span>
-            </div>
-          </div>
-        </div>
 
-        <div class="cert-date">${date}</div>
-      </div>
-      `;
-    });
+totalCerts.innerText = totalCount;
+verified.innerText = verifiedCount;
+skills.innerText = skillsSet.size;
 
-    totalCerts.innerText = snapshot.size;
-    verified.innerText = verifiedCount;
-    skills.innerText = skillsSet.size;
 
-    let strength = verifiedCount * 0.2;
-    if(strength > 100) strength = 100;
-    strength = strength.toFixed(1);
+updateStrengthPie(allCertificates);
+renderCertificates();
 
-    if(verifiedCount == 0){
-      strengthBar.style.width = "0%";
-      strengthBar.style.background = "#d1d5db";
-      strengthText.innerText = "0%";
-    }else{
-      strengthBar.style.width = strength + "%";
-      strengthBar.style.background = "#0ea5e9";
-      strengthText.innerText = strength + "%";
-    }
-  });
+});
+
 }
 
-/* ================= OPEN CERT ================= */
 
-function openCert(url){
+/*************************
+ PIE CHART (PROFESSIONAL VERSION)
+*************************/
 
-  if(!url){
-    alert("No certificate file linked");
-    return;
-  }
+function updateStrengthPie(certificates)
+{
 
-  window.open(url, "_blank");
+let beginner = 0;
+let intermediate = 0;
+let advanced = 0;
+
+
+// count VERIFIED certificates
+certificates.forEach(cert =>
+{
+
+if(cert.verified !== true && cert.status !== "verified")
+return;
+
+const level = (cert.level || "").toLowerCase();
+
+if(level === "beginner") beginner++;
+else if(level === "intermediate") intermediate++;
+else if(level === "advanced") advanced++;
+
+});
+
+
+const verifiedCount =
+beginner + intermediate + advanced;
+
+
+// profile strength calculation
+let profileStrength =
+verifiedCount * 0.2;
+
+if(profileStrength > 100)
+profileStrength = 100;
+
+profileStrength =
+Math.round(profileStrength * 10) / 10;
+
+
+const centerText =
+document.getElementById("strengthPercent");
+
+centerText.innerText =
+profileStrength + "%";
+
+
+const ctx =
+document.getElementById("strengthPie")
+.getContext("2d");
+
+
+// destroy old chart
+if(strengthChart)
+strengthChart.destroy();
+
+
+// PROFESSIONAL GLOW PLUGIN
+const glowPlugin =
+{
+id:"glowEffect",
+
+beforeDatasetDraw(chart)
+{
+
+const {ctx} = chart;
+
+ctx.save();
+
+if(document.body.classList.contains("dark"))
+{
+ctx.shadowBlur = 18;
+ctx.shadowColor =
+"rgba(255,255,255,0.15)";
+}
+else
+{
+ctx.shadowBlur = 6;
+ctx.shadowColor =
+"rgba(0,0,0,0.08)";
 }
 
-/* ================= PROFILE ================= */
+},
 
-function openProfile(){
-  profileModal.style.display = "flex";
-
-  firebase.auth().onAuthStateChanged(user=>{
-    if(user){
-      profileName.value = user.displayName || "";
-    }
-  });
+afterDatasetDraw(chart)
+{
+chart.ctx.restore();
 }
 
-function closeProfile(){
-  profileModal.style.display = "none";
+};
+
+
+// CREATE CHART
+strengthChart =
+new Chart(ctx,
+{
+
+type:"doughnut",
+
+data:
+{
+
+labels:[
+"Beginner",
+"Intermediate",
+"Advanced"
+],
+
+datasets:[
+{
+
+data:[
+beginner,
+intermediate,
+advanced
+],
+
+backgroundColor:[
+"#22c55e",
+"#f59e0b",
+"#ef4444"
+],
+
+borderColor:[
+"#4ade80",
+"#fde047",
+"#f87171"
+],
+
+borderWidth:2,
+
+hoverOffset:6
+
+}]
+
+},
+
+options:
+{
+
+cutout:"75%",
+
+plugins:
+{
+legend:{display:false}
+},
+
+onHover:(event,elements)=>
+{
+
+if(elements.length > 0)
+{
+
+const index =
+elements[0].index;
+
+const value =
+strengthChart.data.datasets[0].data[index];
+
+const percent =
+verifiedCount === 0
+? 0
+: Math.round(
+(value / verifiedCount) * 100
+);
+
+centerText.innerText =
+percent + "%";
+
+}
+else
+{
+centerText.innerText =
+profileStrength + "%";
 }
 
-function saveProfile(){
-
-  const name = profileName.value;
-
-  firebase.auth().currentUser.updateProfile({
-    displayName:name
-  }).then(()=>{
-    userName.innerText = name;
-    closeProfile();
-    alert("Profile Updated");
-  });
 }
 
-/* ================= SETTINGS ================= */
+},
 
-function changePassword(){
-  auth.sendPasswordResetEmail(auth.currentUser.email);
-  alert("Reset link sent");
+plugins:[glowPlugin]
+
+});
+
 }
 
-function toggleSettings(){
-  settingsBox.style.display =
-    settingsBox.style.display === "block" ? "none" : "block";
+
+/*************************
+ RENDER CERTIFICATES
+*************************/
+
+function renderCertificates()
+{
+
+const searchValue =
+dashboardSearch?.value.toLowerCase() || "";
+
+certList.innerHTML = "";
+
+allCertificates.forEach(d =>
+{
+
+if(
+!d.title?.toLowerCase().includes(searchValue)
+&&
+!d.skill?.toLowerCase().includes(searchValue)
+) return;
+
+
+const date =
+d.createdAt
+? d.createdAt.toDate().toLocaleDateString()
+: "Just now";
+
+const fileUrl =
+d.file || "";
+
+
+certList.innerHTML +=
+`
+<div class="cert-row" onclick="openCert('${fileUrl}')">
+
+<div class="cert-left">
+
+<div class="cert-icon">📄</div>
+
+<div>
+
+<div class="cert-title">
+${d.title || "Certificate"}
+</div>
+
+<div class="cert-tags">
+
+<span class="tag skill">
+${d.skill || ""}
+</span>
+
+<span class="tag level ${(d.level||"").toLowerCase()}">
+${d.level || ""}
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="cert-date">
+${date}
+</div>
+
+</div>
+`;
+
+});
+
 }
 
-/* ================= AUTH ================= */
 
-function logout(){
-  auth.signOut();
+/*************************
+ EDIT PROFILE
+*************************/
+
+function openProfile()
+{
+editModal.classList.add("show");
+editName.value = userName.innerText;
 }
 
-/* ================= UPLOAD MODAL ================= */
-
-function openUploadModal(){
-  uploadFrameModal.style.display = "flex";
+function closeProfile()
+{
+editModal.classList.remove("show");
 }
 
-function closeUploadModal(){
-  uploadFrameModal.style.display = "none";
+function saveProfile()
+{
+
+const user = auth.currentUser;
+
+if(!user) return;
+
+const newName =
+editName.value.trim();
+
+if(newName === "")
+{
+alert("Please enter name");
+return;
 }
+
+user.updateProfile({
+displayName:newName
+})
+.then(() =>
+{
+userName.innerText = newName;
+closeProfile();
+alert("Profile updated successfully");
+})
+.catch(err =>
+{
+alert(err.message);
+});
+
+}
+
+
+/*************************
+ SETTINGS
+*************************/
+
+function toggleSettings()
+{
+
+settingsBox.style.display =
+settingsBox.style.display==="block"
+? "none"
+: "block";
+
+}
+
+
+/*************************
+ LOGOUT
+*************************/
+
+function logout()
+{
+
+auth.signOut()
+.then(() =>
+location.href="login.html");
+
+}
+
+
+/*************************
+ SEARCH
+*************************/
+
+dashboardSearch
+?.addEventListener(
+"input",
+renderCertificates
+);
+
+/*************************
+UPLOAD MODAL
+*************************/
+
+function openUploadModal()
+{
+uploadFrameModal.style.display = "flex";
+}
+
+function closeUploadFrame()
+{
+uploadFrameModal.style.display = "none";
+}
+
+/*************************
+ OPEN PORTFOLIO
+*************************/
+
+function openPortfolio()
+{
+
+const user = auth.currentUser;
+
+if (!user)
+{
+alert("Please login");
+return;
+}
+
+window.location.href =
+"portfolio.html?uid=" + user.uid;
+
+}
+
+
+/*************************
+ CLOSE MODAL OUTSIDE CLICK
+*************************/
+
+window.addEventListener(
+"click",
+function(event)
+{
+if(event.target === editModal)
+closeProfile();
+}
+);

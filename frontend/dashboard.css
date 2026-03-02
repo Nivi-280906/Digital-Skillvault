@@ -1,418 +1,945 @@
+/* ========================================
+   GLOBAL (LIGHT THEME DEFAULT)
+======================================== */
+
 *{
-  margin:0;
-  box-sizing:border-box;
-  font-family:Inter;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Inter, sans-serif;
 }
 
-/* Body */
 body{
-  background:#f6f9fc;
+background:#f6f9fc;
+color:#0f172a;
+transition:.25s;
 }
 
-/* Layout */
 .layout{
-  display:flex;
-  height:100vh;
+display:flex;
+height:100vh;
 }
 
-/* Sidebar */
+main{
+flex:1;
+padding:25px;
+overflow-y:auto;
+}
+
+
+/* ========================================
+   SIDEBAR
+======================================== */
+
 .sidebar{
-  width:240px;
-  background:linear-gradient(180deg,#0ea5e9,#0284c7);
-  color:white;
-  padding:20px;
-  display:flex;
-  flex-direction:column;
+width:240px;
+background:linear-gradient(180deg,#0ea5e9,#0284c7);
+color:white;
+padding:20px;
+display:flex;
+flex-direction:column;
+}
+
+.sidebar h2{
+font-size:22px;
+margin-bottom:20px;
 }
 
 .sidebar nav a{
-  display:block;
-  padding:12px;
-  margin:8px 0;
-  border-radius:10px;
-  cursor:pointer;
-  color:white;
-  text-decoration:none;
+display:block;
+padding:12px;
+margin:6px 0;
+border-radius:10px;
+color:white;
+text-decoration:none;
+cursor:pointer;
+transition:.2s;
 }
 
-.sidebar nav a.active,
 .sidebar nav a:hover{
-  background:rgba(255,255,255,.25);
+background:rgba(255,255,255,.25);
 }
 
 .bottom{
-  margin-top:auto;
+margin-top:auto;
+padding-top:20px;
 }
 
-/* Main */
-main{
-  flex:1;
-  padding:25px;
+.bottom a{
+display:block;
+text-align:center;
+padding:14px;
+border-radius:12px;
+background:rgba(255,255,255,.25);
+color:white;
+font-weight:600;
+text-decoration:none;
+transition:.25s;
 }
 
-/* Topbar */
+.bottom a:hover{
+background:rgba(255,255,255,.4);
+}
+
+
+/* ========================================
+   TOPBAR
+======================================== */
+
 .topbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:25px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:25px;
+}
+
+.left{
+display:flex;
+flex-direction:column;
+gap:6px;
+}
+
+.left h3{
+font-size:20px;
 }
 
 .left input{
-  padding:8px 12px;
-  border-radius:10px;
-  border:1px solid #ddd;
-  margin-top:6px;
+padding:10px 14px;
+border-radius:10px;
+border:1px solid #e2e8f0;
+width:260px;
+outline:none;
+background:white;
+color:#0f172a;
+}
+
+.left input::placeholder{
+color:#94a3b8;
 }
 
 .right{
-  display:flex;
-  align-items:center;
-  gap:25px;
+display:flex;
+align-items:center;
+gap:15px;
 }
+
+
+/* ========================================
+   UPLOAD BUTTON
+======================================== */
 
 .upload-btn{
-  background:#0ea5e9;
-  border:none;
-  padding:10px 18px;
-  border-radius:10px;
-  color:white;
-  cursor:pointer;
+padding:10px 18px;
+border-radius:12px;
+border:none;
+background:linear-gradient(135deg,#0ea5e9,#38bdf8);
+color:white;
+font-weight:600;
+cursor:pointer;
+transition:.25s;
 }
 
-/* Profile */
+.upload-btn:hover{
+transform:translateY(-2px);
+box-shadow:0 10px 25px rgba(14,165,233,.3);
+}
+
+
+/* ========================================
+   PROFILE
+======================================== */
+
 .profile{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  position:relative;
+display:flex;
+align-items:center;
+gap:10px;
+position:relative;
 }
 
 .avatar-img,
 .avatar-fallback{
-  width:42px;
-  height:42px;
-  border-radius:50%;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  font-weight:bold;
+width:40px;
+height:40px;
+border-radius:50%;
+background:#9333ea;
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+font-weight:600;
 }
 
-.avatar-img{object-fit:cover;}
-
-.avatar-fallback{
-  background:#e5e7eb;
-  color:#0ea5e9;
+.profile-text{
+display:flex;
+flex-direction:column;
 }
 
 .profile-text .email{
-  font-size:12px;
-  opacity:.6;
+font-size:12px;
+color:#64748b;
 }
 
 .gear{
-  width:22px;
-  cursor:pointer;
+width:20px;
+cursor:pointer;
 }
 
-/* Settings dropdown */
+
+/* ========================================
+   SETTINGS DROPDOWN
+======================================== */
+
 .settings{
-  display:none;
-  position:absolute;
-  right:0;
-  top:45px;
-  background:white;
-  padding:10px;
-  border-radius:10px;
-  box-shadow:0 10px 20px rgba(0,0,0,.2);
+display:none;
+position:absolute;
+top:50px;
+right:0;
+background:white;
+padding:10px;
+border-radius:12px;
+box-shadow:0 10px 25px rgba(0,0,0,.25);
+min-width:180px;
+z-index:1000;
 }
 
-.profile:hover .settings{display:block;}
+.settings.show{
+display:block;
+}
 
 .settings div{
-  padding:6px 10px;
-  border-radius:6px;
-  cursor:pointer;
+padding:10px;
+cursor:pointer;
+border-radius:8px;
 }
 
-.settings div:hover{background:#e5e7eb;}
+.settings div:hover{
+background:#f1f5f9;
+}
 
-/* Stats */
+
+/* ========================================
+   STATS CARDS
+======================================== */
+
 .stats{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:15px;
-  margin-bottom:20px;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:15px;
+margin-bottom:20px;
 }
 
 .stat{
-  background:white;
-  padding:20px;
-  border-radius:15px;
-  box-shadow:0 5px 15px rgba(0,0,0,.05);
+background:white;
+padding:20px;
+border-radius:15px;
+border:1px solid #e2e8f0;
+box-shadow:0 4px 15px rgba(0,0,0,.05);
 }
 
 .stat h1{
-  font-size:32px;
-  font-weight:700;
+font-size:28px;
+color:#0ea5e9;
 }
 
-/* Learning Status smaller */
-#learningStatus{font-size:24px!important;}
+.stat p{
+color:#64748b;
+}
 
-/* Cards */
+
+/* ========================================
+   MAIN CONTENT CARDS
+======================================== */
+
 .content{
-  display:grid;
-  grid-template-columns:2fr 1fr;
-  gap:20px;
+display:grid;
+grid-template-columns:2fr 1fr;
+gap:20px;
 }
 
 .card{
-  background:white;
-  padding:20px;
-  border-radius:15px;
-  box-shadow:0 5px 15px rgba(0,0,0,.05);
+background:white;
+padding:20px;
+border-radius:15px;
+border:1px solid #e2e8f0;
+box-shadow:0 4px 15px rgba(0,0,0,.05);
+transition:.25s;
 }
 
-.big{min-height:320px;}
+.card:hover{
+transform:translateY(-3px);
+box-shadow:0 10px 25px rgba(0,0,0,.1);
+}
 
-/* Recent Certificates */
+
+/* ========================================
+   CERTIFICATE LIST
+======================================== */
 
 .recent-list{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
+display:flex;
+flex-direction:column;
+gap:15px;
 }
 
 .cert-row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:12px;
-  border:1px solid #e5e7eb;
-  border-radius:12px;
-}
-
-.cert-left{
-  display:flex;
-  gap:12px;
-  align-items:center;
-}
-
-.cert-icon{
-  width:36px;
-  height:36px;
-  border-radius:8px;
-  background:#e5e7eb;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.cert-title{font-weight:600;}
-
-.cert-tags{
-  display:flex;
-  gap:6px;
-  margin-top:4px;
-}
-
-.tag{
-  font-size:11px;
-  padding:3px 8px;
-  border-radius:20px;
-  background:#f1f5f9;
-}
-
-.cert-date{
-  font-size:12px;
-  opacity:.6;
-}
-
-/* Progress */
-.progress{
-  height:10px;
-  background:#e5e7eb;
-  border-radius:10px;
-  overflow:hidden;
-  margin:10px 0;
-}
-
-.progress-fill{
-  background:#0ea5e9;
-  border-radius:10px;
-  color:transparent;
-  font-size:0;
-}
-
-.strength-text{
-  margin-top:6px;
-  font-size:13px;
-  opacity:.7;
-}
-
-/* Modals */
-
-.modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.6);
-  display:none;
-  justify-content:center;
-  align-items:center;
-  z-index:3000;
-}
-
-.modal-box{
-  background:#0b1220;
-  padding:25px;
-  border-radius:12px;
-  width:300px;
-  color:white;
-}
-.upload-frame-modal{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100vw;
-  height:100vh;
-  background:rgba(0,0,0,.45);
-  display:none;
-  justify-content:center;
-  align-items:center;
-  z-index:2000;
-}
-
-
-.upload-frame-box{
-  background:transparent;
-  width:520px;
-  height:700px;
-  max-height:90vh;
-  border-radius:18px;
-  overflow:hidden;
-  position:relative;
-}
-
-.upload-frame-box iframe{
-  width:100%;
-  height:100%;
-  border:none;
-  background:transparent;
-}
-
-
-
-
-/* Learning Status colors */
-
-.status-active{color:#16a34a;}
-.status-inactive{color:#dc2626;}
-
-/* Dark Mode */
-
-body.dark{
-  background:#020617;
-  color:#e5e7eb;
-}
-
-body.dark .sidebar{
-  background:#020617;
-  border-right:1px solid #1e293b;
-}
-
-body.dark .card,
-body.dark .stat{
-  background:#020617;
-  border:1px solid #1e293b;
-  box-shadow:none;
-}
-
-body.dark input{
-  background:#020617;
-  border:1px solid #1e293b;
-  color:white;
-}
-
-body.dark .upload-btn{background:#0284c7;}
-
-body.dark .progress{background:#1e293b;}
-body.dark .progress-fill{background:#38bdf8;}
-
-body.dark .settings{
-  background:#020617;
-  border:1px solid #1e293b;
-  color:white;
-}
-
-body.dark .settings div:hover{background:#1e293b;}
-body.dark .sidebar nav a.active{background:#0284c7;}
-body.dark .gear{filter:invert(1);}
-
-body.dark .cert-row{border:1px solid #1e293b;}
-body.dark .cert-icon{background:#1e293b;}
-body.dark .tag{background:#1e293b;}
-
-body.dark .status-active{color:#22c55e;}
-body.dark .status-inactive{color:#f87171;}
-/* Level badge colors */
-
-.tag.beginner{
-  background:#dcfce7;
-  color:#166534;
-}
-
-.tag.intermediate{
-  background:#fef9c3;
-  color:#854d0e;
-}
-
-.tag.advanced{
-  background:#fee2e2;
-  color:#991b1b;
-}
-
-/* Dark mode */
-
-body.dark .tag.beginner{
-  background:#064e3b;
-  color:#6ee7b7;
-}
-
-body.dark .tag.intermediate{
-  background:#713f12;
-  color:#fde68a;
-}
-
-body.dark .tag.advanced{
-  background:#7f1d1d;
-  color:#fecaca;
-}
-
-/* Make certificate rows clickable */
-.cert-row{
-  cursor:pointer;
+display:flex;
+justify-content:space-between;
+align-items:center;
+border:1px solid #e2e8f0;
+border-radius:15px;
+padding:15px;
+cursor:pointer;
+transition:.25s;
+background:white;
 }
 
 .cert-row:hover{
-  background:#f8fafc;
+box-shadow:0 8px 20px rgba(0,0,0,.08);
+border-color:#0ea5e9;
+}
+
+.cert-left{
+display:flex;
+gap:12px;
+align-items:center;
+}
+
+.cert-icon{
+width:40px;
+height:40px;
+border-radius:10px;
+background:#e2e8f0;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.cert-title{
+font-weight:600;
+font-size:16px;
+}
+
+.cert-date{
+font-size:14px;
+color:#64748b;
+}
+
+
+/* ========================================
+   TAGS
+======================================== */
+
+.tag{
+font-size:12px;
+padding:4px 10px;
+border-radius:999px;
+}
+
+.tag.skill{
+background:#e2e8f0;
+color:#334155;
+}
+
+.tag.level.beginner{
+background:#dcfce7;
+color:#166534;
+}
+
+.tag.level.intermediate{
+background:#fef9c3;
+color:#854d0e;
+}
+
+.tag.level.advanced{
+background:#fee2e2;
+color:#991b1b;
+}
+
+
+/* ========================================
+   PIE CHART
+======================================== */
+
+.pie-container{
+position:relative;
+width:140px;
+height:140px;
+margin:auto;
+}
+
+#strengthPercent{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-weight:700;
+color:#0ea5e9;
+}
+
+
+/* ========================================
+   LEGEND
+======================================== */
+
+.legend-item{
+display:flex;
+align-items:center;
+gap:8px;
+margin:6px 0;
+}
+
+.legend-color{
+width:12px;
+height:12px;
+border-radius:50%;
+}
+
+.legend-color.beginner{
+background:#22c55e;
+}
+
+.legend-color.intermediate{
+background:#f59e0b;
+}
+
+.legend-color.advanced{
+background:#ef4444;
+}
+
+
+/* ========================================
+   STATUS COLORS
+======================================== */
+
+.status-active{
+color:#22c55e; /* GREEN */
+font-weight:700;
+}
+
+.status-inactive{
+color:#ef4444; /* RED */
+font-weight:700;
+}
+
+/* ========================================
+   MODAL VIEWER
+======================================== */
+
+.modal{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+display:none;
+justify-content:center;
+align-items:center;
+background:rgba(0,0,0,.6);
+z-index:9999;
+}
+
+.modal.show{
+display:flex;
+}
+
+.modal-box{
+width:700px;
+height:550px;
+background:white;
+border-radius:16px;
+box-shadow:0 20px 50px rgba(0,0,0,.3);
+position:relative;
+overflow:hidden;
+}
+
+#certViewer{
+width:100%;
+height:100%;
+border:none;
+background:white;
+}
+
+.close-btn{
+position:absolute;
+top:12px;
+right:15px;
+font-size:24px;
+cursor:pointer;
+background:white;
+width:35px;
+height:35px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+box-shadow:0 4px 12px rgba(0,0,0,.3);
+transition:.2s;
+}
+
+.close-btn:hover{
+background:#0ea5e9;
+color:white;
+}
+
+
+/* ========================================
+   INPUT FIELD
+======================================== */
+
+.input-field{
+width:100%;
+padding:12px;
+border-radius:10px;
+border:1px solid #cbd5e1;
+background:white;
+color:#0f172a;
+outline:none;
+}
+
+.input-field:focus{
+border-color:#0ea5e9;
+box-shadow:0 0 0 3px rgba(14,165,233,.2);
+}
+
+
+/* ========================================
+   SAVE BUTTON
+======================================== */
+
+.save-btn{
+margin-top:15px;
+padding:10px 25px;
+border-radius:10px;
+border:none;
+background:linear-gradient(135deg,#0ea5e9,#38bdf8);
+color:white;
+font-weight:600;
+cursor:pointer;
+}
+
+.save-btn:hover{
+box-shadow:0 8px 20px rgba(14,165,233,.3);
+}
+/* ========================================
+   COMPLETE DARK THEME
+   Apply when body has class="dark"
+======================================== */
+
+body.dark{
+background:#020617;
+color:#e2e8f0;
+}
+
+
+/* ========================================
+   SIDEBAR
+======================================== */
+
+body.dark .sidebar{
+background:#020617;
+border-right:1px solid #1e293b;
+}
+
+body.dark .sidebar nav a{
+color:#cbd5e1;
+}
+
+body.dark .sidebar nav a:hover{
+background:#1e293b;
+color:#38bdf8;
+}
+
+body.dark .bottom a{
+background:#1e293b;
+color:#e2e8f0;
+}
+
+body.dark .bottom a:hover{
+background:#334155;
+}
+
+
+/* ========================================
+   TOPBAR
+======================================== */
+
+body.dark .topbar{
+color:#f1f5f9;
+}
+
+
+/* SEARCH INPUT */
+
+body.dark .left input{
+background:#020617;
+border:1px solid #334155;
+color:#e2e8f0;
+}
+
+body.dark .left input::placeholder{
+color:#64748b;
+}
+
+
+/* ========================================
+   UPLOAD BUTTON
+======================================== */
+
+body.dark .upload-btn{
+background:linear-gradient(135deg,#0284c7,#38bdf8);
+}
+
+body.dark .upload-btn:hover{
+box-shadow:0 10px 25px rgba(56,189,248,.3);
+}
+
+
+/* ========================================
+   PROFILE
+======================================== */
+
+body.dark .avatar-img,
+body.dark .avatar-fallback{
+background:#7c3aed;
+}
+
+body.dark .profile-text{
+color:#e2e8f0;
+}
+
+body.dark .profile-text .email{
+color:#94a3b8;
+}
+
+
+/* GEAR ICON */
+
+body.dark .gear{
+filter:invert(1);
+}
+
+
+/* ========================================
+   SETTINGS DROPDOWN
+======================================== */
+
+body.dark .settings{
+background:#0f172a;
+border:1px solid #1e293b;
+box-shadow:0 10px 30px rgba(0,0,0,.6);
+}
+
+body.dark .settings div{
+color:#e2e8f0;
+}
+
+body.dark .settings div:hover{
+background:#1e293b;
+color:#38bdf8;
+}
+
+
+/* ========================================
+   STATS CARDS
+======================================== */
+
+body.dark .stat{
+background:#0f172a;
+border:1px solid #1e293b;
+box-shadow:0 4px 20px rgba(0,0,0,.4);
+}
+
+body.dark .stat h1{
+color:#38bdf8;
+}
+
+
+/* ========================================
+   MAIN CARDS
+======================================== */
+
+body.dark .card{
+background:#0f172a;
+border:1px solid #1e293b;
+box-shadow:0 4px 20px rgba(0,0,0,.4);
+}
+
+body.dark .card:hover{
+transform:translateY(-3px);
+box-shadow:0 8px 30px rgba(0,0,0,.6);
+}
+
+
+/* ========================================
+   CERTIFICATE LIST
+======================================== */
+
+body.dark .cert-row{
+background:#020617;
+border:1px solid #1e293b;
 }
 
 body.dark .cert-row:hover{
-  background:#020617;
-}
-.upload-frame-modal{
-  pointer-events:auto !important;
+box-shadow:0 8px 25px rgba(0,0,0,.6);
+border-color:#38bdf8;
 }
 
-.layout{
-  pointer-events:auto !important;
+body.dark .cert-title{
+color:#f1f5f9;
 }
 
-main{
-  pointer-events:auto !important;
+body.dark .cert-date{
+color:#94a3b8;
 }
-.cert-row{
-  cursor:pointer;
+
+body.dark .cert-icon{
+background:#1e293b;
+color:#38bdf8;
+}
+
+
+/* ========================================
+   TAGS
+======================================== */
+
+body.dark .tag.skill{
+background:#1e293b;
+color:#cbd5e1;
+}
+
+body.dark .tag.level.beginner{
+background:#064e3b;
+color:#34d399;
+}
+
+body.dark .tag.level.intermediate{
+background:#713f12;
+color:#facc15;
+}
+
+body.dark .tag.level.advanced{
+background:#7f1d1d;
+color:#f87171;
+}
+
+
+/* ========================================
+   PIE CHART
+======================================== */
+
+body.dark #strengthPie{
+
+filter:
+drop-shadow(0 4px 12px rgba(0,0,0,0.7))
+drop-shadow(0 0 6px rgba(56,189,248,0.2));
+
+}
+
+body.dark #strengthPercent{
+color:#7dd3fc;
+}
+
+
+/* ========================================
+   LEGEND
+======================================== */
+
+body.dark .legend-item{
+color:#cbd5e1;
+}
+
+body.dark .legend-color.beginner{
+background:#22c55e;
+}
+
+body.dark .legend-color.intermediate{
+background:#f59e0b;
+}
+
+body.dark .legend-color.advanced{
+background:#ef4444;
+}
+
+
+/* ========================================
+   STATUS COLORS
+======================================== */
+
+body.dark .status-active{
+color:#4ade80; /* bright green */
+}
+
+body.dark .status-inactive{
+color:#f87171; /* bright red */
+}
+
+/* ========================================
+   MODAL BACKGROUND
+======================================== */
+
+body.dark .modal{
+background:rgba(0,0,0,.8);
+}
+
+
+/* ========================================
+   MODAL BOX
+======================================== */
+
+body.dark .modal-box{
+background:#0f172a;
+border:1px solid #1e293b;
+box-shadow:0 20px 50px rgba(0,0,0,.8);
+}
+
+
+/* IFRAME */
+
+body.dark #certViewer{
+background:#020617;
+}
+
+
+/* CLOSE BUTTON */
+
+body.dark .close-btn{
+background:#1e293b;
+color:#cbd5e1;
+}
+
+body.dark .close-btn:hover{
+background:#38bdf8;
+color:white;
+}
+
+
+/* ========================================
+   INPUT FIELDS
+======================================== */
+
+body.dark .input-field{
+background:#020617;
+border:1px solid #334155;
+color:#e2e8f0;
+}
+
+body.dark .input-field:focus{
+border-color:#38bdf8;
+box-shadow:0 0 0 3px rgba(56,189,248,.25);
+}
+
+
+/* ========================================
+   SAVE BUTTON
+======================================== */
+
+body.dark .save-btn{
+background:linear-gradient(135deg,#0284c7,#38bdf8);
+}
+
+body.dark .save-btn:hover{
+box-shadow:0 8px 20px rgba(56,189,248,.4);
+}
+/* UPLOAD FRAME MODAL FIX */
+
+.upload-frame-box{
+
+width:560px;
+height:620px;
+
+padding:0;
+
+background:#020617;
+
+border-radius:18px;
+
+overflow:hidden;
+
+position:relative;
+
+}
+
+/* REMOVE iframe spacing */
+
+#uploadFrame{
+
+width:100%;
+height:100%;
+
+border:none;
+
+display:block;
+
+}
+
+/* CLOSE BUTTON */
+
+.upload-frame-box .close-btn{
+
+position:absolute;
+
+top:12px;
+right:14px;
+
+z-index:10;
+
+font-size:22px;
+
+cursor:pointer;
+
+color:#94a3b8;
+
+}
+
+.upload-frame-box .close-btn:hover{
+
+color:#38bdf8;
+
+}
+/* FINAL FIX FOR DUPLICATE MODAL LOOK */
+
+#uploadFrameModal .modal-box.upload-frame-box{
+
+background:transparent !important;
+
+border:none !important;
+
+box-shadow:none !important;
+
+padding:0 !important;
+
+width:560px;
+height:620px;
+
+}
+
+#uploadFrameModal iframe{
+
+width:100%;
+height:100%;
+
+border:none;
+
+display:block;
+
+border-radius:18px;
+
+}
+/* FORCE ACTIVE GREEN */
+#learningStatus.status-active{
+color:#22c55e !important;
+}
+
+/* FORCE INACTIVE RED */
+#learningStatus.status-inactive{
+color:#ef4444 !important;
+}
+
+/* DARK THEME */
+body.dark #learningStatus.status-active{
+color:#4ade80 !important;
+}
+
+body.dark #learningStatus.status-inactive{
+color:#f87171 !important;
 }

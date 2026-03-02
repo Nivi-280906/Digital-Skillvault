@@ -1,77 +1,122 @@
+/* ================= FIREBASE AUTH ================= */
+
 const auth = firebase.auth();
 
-/* ================= SIGNUP ================= */
+/* ===================================================
+   AUTO REDIRECT IF USER ALREADY LOGGED IN
+=================================================== */
 
-if(document.getElementById("signupForm")){
+auth.onAuthStateChanged(user => {
+
+  // Only protect dashboard page
+  if (window.location.pathname.includes("dashboard.html")) {
+
+    if (!user) {
+      window.location.href = "login.html";
+    }
+
+  }
+
+});
+
+
+
+/* ===================================================
+   SIGNUP PAGE
+=================================================== */
+
+if (document.getElementById("signupForm")) {
 
   const signupForm = document.getElementById("signupForm");
   const googleBtn = document.getElementById("googleBtn");
 
-  // Email + password signup
-  signupForm.addEventListener("submit", e => {
+  // 🔹 Email + Password Signup
+  signupForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const email = document.getElementById("signup-email").value;
-    const password = document.getElementById("signup-password").value;
+    const email = document.getElementById("signup-email").value.trim();
+    const password = document.getElementById("signup-password").value.trim();
 
     auth.createUserWithEmailAndPassword(email, password)
-    .then(() => {
-      window.location.href = "dashboard.html";
-    })
-    .catch(err => alert(err.message));
+      .then(() => {
+        window.location.href = "dashboard.html";
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
   });
 
-  // Google signup (FORCE account picker)
-  googleBtn.onclick = () => {
+  // 🔹 Google Signup (Popup Method - Stable)
+  googleBtn.addEventListener("click", () => {
 
     const provider = new firebase.auth.GoogleAuthProvider();
-
-    // 🔴 THIS IS THE IMPORTANT LINE
     provider.setCustomParameters({
       prompt: "select_account"
     });
 
     auth.signInWithPopup(provider)
-    .then(() => {
-      window.location.href = "dashboard.html";
-    })
-    .catch(err => alert(err.message));
-  };
-
+      .then(() => {
+        window.location.href = "dashboard.html";
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  });
 }
 
 
-/* ================= LOGIN ================= */
+/* ===================================================
+   LOGIN PAGE
+=================================================== */
 
-if(document.getElementById("loginForm")){
+if (document.getElementById("loginForm")) {
 
   const loginForm = document.getElementById("loginForm");
   const googleLogin = document.getElementById("googleLogin");
 
-  // Email + password login
-  loginForm.addEventListener("submit", e => {
+  // 🔹 Email + Password Login
+  loginForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const email = document.getElementById("login-email").value;
-    const password = document.getElementById("login-password").value;
+    const email = document.getElementById("login-email").value.trim();
+    const password = document.getElementById("login-password").value.trim();
 
     auth.signInWithEmailAndPassword(email, password)
-    .then(() => {
-      window.location.href = "dashboard.html";
-    })
-    .catch(err => alert(err.message));
+      .then(() => {
+        window.location.href = "dashboard.html";
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
   });
+auth.onAuthStateChanged(user => {
 
-  // Google login (normal behavior – auto login allowed)
-  googleLogin.onclick = () => {
+  if (user) {
+
+    const emailInput = document.getElementById("login-email");
+
+    if (emailInput) {
+      emailInput.value = user.email;
+    }
+
+  }
+
+});
+
+  // 🔹 Google Login (Popup Method)
+  googleLogin.addEventListener("click", () => {
 
     const provider = new firebase.auth.GoogleAuthProvider();
+    provider.setCustomParameters({
+      prompt: "select_account"
+    });
 
     auth.signInWithPopup(provider)
-    .then(() => {
-      window.location.href = "dashboard.html";
-    })
-    .catch(err => alert(err.message));
-  };
-
+      .then(() => {
+        window.location.href = "dashboard.html";
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  });
 }

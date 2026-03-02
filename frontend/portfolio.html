@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+<title>SkillVault Portfolio</title>
+
+<link rel="stylesheet" href="dashboard.css">
+<link rel="stylesheet" href="portfolio.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="layout">
+
+<aside class="sidebar">
+
+<h2>SkillVault</h2>
+
+<nav>
+<a href="dashboard.html">Dashboard</a>
+<a href="certificates.html">My Certificates</a>
+<a class="active">Share Portfolio</a>
+<a href="settings.html">Settings</a>
+</nav>
+
+<div class="bottom">
+<a onclick="logout()">Sign Out</a>
+</div>
+
+</aside>
+
+
+<main>
+
+<div class="topbar">
+
+<div>
+<h2>Share Portfolio</h2>
+<p class="subtitle">Share your certificates professionally</p>
+</div>
+
+<div class="profile">
+
+<img id="avatarImg" class="avatar-img">
+
+<div id="avatarFallback" class="avatar-fallback"></div>
+
+<div>
+<div id="userName"></div>
+<div id="userEmail" class="email"></div>
+</div>
+
+</div>
+
+</div>
+
+
+<!-- CERTIFICATE LIST -->
+<div class="portfolio-container">
+
+<div id="certList"></div>
+
+</div>
+
+</main>
+
+</div>
+
+
+<div id="shareModal" class="share-modal">
+
+<div class="share-box">
+
+    <!-- HEADER -->
+   <div class="share-header">
+
+    <h3 class="share-title">Share Portfolio</h3>
+
+    <button class="close-btn" onclick="closeShareModal()">
+        &times;
+    </button>
+
+</div>
+
+    <!-- LINK SECTION -->
+    <div class="share-link-row">
+
+        <input id="shareLink" readonly>
+
+        <button class="copy-btn" onclick="copyLink()">Copy</button>
+
+    </div>
+
+
+    <!-- SHARE BUTTONS -->
+    <div class="share-buttons">
+
+        <button onclick="shareEmail()" class="share-option">
+            📧 Email
+        </button>
+
+        <button onclick="shareLinkedIn()" class="share-option linkedin">
+            in LinkedIn
+        </button>
+
+        <button onclick="shareWhatsApp()" class="share-option whatsapp">
+            🟢 WhatsApp
+        </button>
+
+    </div>
+
+
+    <!-- ACCESS LEVEL -->
+    <div class="access-row">
+
+        <div>
+
+            <label>Access level</label>
+
+            <select id="accessLevel" onchange="updateAccessLevel()">
+                <option value="view">Can view</option>
+                <option value="edit">Can edit</option>
+            </select>
+
+        </div>
+
+    </div>
+<!-- OWNER -->
+<div class="viewer-section">
+
+    <h4>Owner</h4>
+
+    <div id="ownerId" class="owner-id"></div>
+
+</div>
+
+
+
+    <!-- VIEWERS -->
+    <div class="viewer-section">
+
+        <h4>Viewers</h4>
+
+        <ul id="viewerList" class="viewer-list"></ul>
+
+    </div>
+
+
+</div>
+
+</div>
+
+
+
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+<script src="firebase.js"></script>
+<script src="portfolio.js"></script>
+<script src="theme.js"></script>
+</body>
+</html>

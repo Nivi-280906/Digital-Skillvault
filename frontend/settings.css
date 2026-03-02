@@ -1,0 +1,175 @@
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Inter, sans-serif;
+}
+
+body{
+background:#f6f9fc;
+color:#0f172a;
+}
+
+.layout{
+display:flex;
+height:100vh;
+}
+
+main{
+flex:1;
+padding:25px;
+overflow-y:auto;
+}
+
+/* SIDEBAR */
+.sidebar{
+width:240px;
+background:linear-gradient(180deg,#0ea5e9,#0284c7);
+color:white;
+padding:20px;
+display:flex;
+flex-direction:column;
+}
+
+.sidebar h2{
+font-size:22px;
+margin-bottom:20px;
+font-weight:700;
+}
+
+.sidebar nav a{
+display:block;
+padding:12px;
+margin:6px 0;
+border-radius:10px;
+color:white;
+text-decoration:none;
+transition:.2s;
+}
+
+.sidebar nav a:hover{
+background:rgba(255,255,255,.25);
+}
+
+.sidebar nav a.active{
+background:rgba(255,255,255,.25);
+}
+
+.bottom{
+margin-top:auto;
+padding-top:20px;
+}
+
+.bottom a{
+display:block;
+text-align:center;
+padding:14px;
+border-radius:12px;
+background:rgba(255,255,255,.25);
+color:white;
+font-weight:600;
+text-decoration:none;
+}
+
+/* SETTINGS */
+.title{
+font-size:26px;
+font-weight:700;
+margin-bottom:6px;
+}
+
+.subtitle{
+font-size:14px;
+color:#64748b;
+margin-bottom:25px;
+}
+
+.settings-card{
+background:white;
+padding:22px;
+border-radius:15px;
+border:1px solid #e2e8f0;
+box-shadow:0 4px 15px rgba(0,0,0,.05);
+width:520px;
+}
+
+.setting-row{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:18px 0;
+border-bottom:1px solid #e2e8f0;
+}
+
+.setting-row:last-child{
+border-bottom:none;
+}
+
+.setting-title{
+font-size:16px;
+font-weight:600;
+}
+
+.setting-desc{
+font-size:13px;
+color:#64748b;
+margin-top:4px;
+}
+
+/* SWITCH */
+.switch{
+position:relative;
+width:42px;
+height:22px;
+}
+
+.switch input{
+display:none;
+}
+
+.slider{
+position:absolute;
+cursor:pointer;
+background:#cbd5e1;
+border-radius:20px;
+top:0;
+left:0;
+right:0;
+bottom:0;
+transition:.25s;
+}
+
+.slider:before{
+content:"";
+position:absolute;
+width:18px;
+height:18px;
+left:2px;
+bottom:2px;
+background:white;
+border-radius:50%;
+transition:.25s;
+}
+
+.switch input:checked + .slider{
+background:#0ea5e9;
+}
+
+.switch input:checked + .slider:before{
+transform:translateX(20px);
+}
+
+/* BUTTON */
+.backup-btn{
+padding:10px 18px;
+border-radius:12px;
+border:none;
+background:linear-gradient(135deg,#0ea5e9,#38bdf8);
+color:white;
+font-weight:600;
+cursor:pointer;
+}
+
+.backup-btn:hover{
+box-shadow:0 10px 25px rgba(14,165,233,.3);
+}

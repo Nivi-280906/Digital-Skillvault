@@ -1,40 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <meta charset="UTF-8">
 <title>SkillVault</title>
+
 <link rel="stylesheet" href="dashboard.css">
+
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
 
 <div class="layout">
 
+<!-- SIDEBAR -->
 <aside class="sidebar">
+
 <h2>SkillVault</h2>
 
 <nav>
+
 <a class="active">Dashboard</a>
 <a href="certificates.html">My Certificates</a>
-<a>Share Portfolio</a>
-<a>Settings</a>
-</nav>
+<a onclick="openPortfolio()">Share Portfolio</a>
+<a href="settings.html">Settings</a>
 
+</nav>
 
 <div class="bottom">
 <a onclick="logout()">Sign Out</a>
 </div>
+
 </aside>
 
+
+
+<!-- MAIN -->
 <main>
 
 <header class="topbar">
 
 <div class="left">
+
 <h3>Dashboard</h3>
-<input placeholder="Search certificates...">
+
+<input id="dashboardSearch" placeholder="Search certificates...">
+
 </div>
+
 
 <div class="right">
 
@@ -43,126 +58,173 @@
 </button>
 
 
-
-
 <div class="profile">
 
-<!-- REAL PHOTO + FALLBACK -->
 <img id="avatarImg" class="avatar-img">
+
 <div id="avatarFallback" class="avatar-fallback"></div>
 
 <div class="profile-text">
-  <div id="userName"></div>
-  <div id="userEmail" class="email"></div>
+
+<div id="userName"></div>
+
+<div id="userEmail" class="email"></div>
+
 </div>
 
-<img src="https://cdn-icons-png.flaticon.com/512/3524/3524659.png"
-class="gear" onclick="toggleSettings()">
+<img
+src="https://cdn-icons-png.flaticon.com/512/3524/3524659.png"
+class="gear"
+onclick="toggleSettings()"
+>
 
 <div id="settingsBox" class="settings">
+
 <div onclick="openProfile()">✏ Edit Profile</div>
+
 <div onclick="changePassword()">🔐 Change Password</div>
-<div style="cursor:pointer" onclick="toggleTheme()">
-  <span id="themeIcon">🌙</span> Theme
-</div>
 
-</div>
-
+<div onclick="toggleTheme()">🌙 Theme</div>
 
 </div>
 
 </div>
+
+</div>
+
 </header>
 
+
+
+<!-- STATS -->
+
 <div class="stats">
-  <div class="stat">
-    <h1 id="totalCerts">0</h1>
-    <p>Total Certificates</p>
-  </div>
 
-  <div class="stat">
-    <h1 id="verified">0</h1>
-    <p>Verified</p>
-  </div>
-
-  <div class="stat">
-    <h1 id="skills">0</h1>
-    <p>Skills Learned</p>
-  </div>
-
-  <div class="stat">
-    <h1 id="learningStatus" class="status-inactive">Inactive</h1>
-    <p>Learning Status</p>
-  </div>
+<div class="stat">
+<h1 id="totalCerts">0</h1>
+<p>Total Certificates</p>
 </div>
 
+<div class="stat">
+<h1 id="verified">0</h1>
+<p>Verified</p>
+</div>
+
+<div class="stat">
+<h1 id="skills">0</h1>
+<p>Skills Learned</p>
+</div>
+
+<div class="stat">
+<h1 id="learningStatus" class="status-inactive">
+Inactive
+</h1>
+<p>Learning Status</p>
+</div>
+
+</div>
+
+
+
+<!-- CONTENT -->
 
 <div class="content">
 
-<div class="card big">
+<div class="card">
+
 <h3>Recent Certificates</h3>
-<p style="font-size:13px;opacity:.6;margin-bottom:12px">
-Your latest uploaded certificates
-</p>
 
 <div id="certList" class="recent-list"></div>
 
 </div>
 
+
 <div class="card">
+
 <h3>Profile Strength</h3>
 
-<div class="progress">
-  <div id="strengthBar" class="progress-fill"></div>
+<div class="pie-container">
+
+<canvas id="strengthPie"></canvas>
+
+<div class="pie-center">
+<span id="strengthPercent">0%</span>
 </div>
 
-<div id="strengthText" class="strength-text">0%</div>
+</div>
 
-<ul>
-  <li>Upload certificates</li>
-  <li>Verify certificates</li>
-  <li>Add skills</li>
-</ul>
+<!-- ADD THIS LEGEND -->
+<div class="legend">
+
+<div class="legend-item">
+<div class="legend-color beginner"></div>
+<span>Beginner</span>
+</div>
+
+<div class="legend-item">
+<div class="legend-color intermediate"></div>
+<span>Intermediate</span>
+</div>
+
+<div class="legend-item">
+<div class="legend-color advanced"></div>
+<span>Advanced</span>
+</div>
+
+</div>
 
 </div>
 
 </div>
 
 </main>
+
 </div>
-<!-- Upload Modal Wrapper -->
-<div id="uploadFrameModal" class="upload-frame-modal">
 
-  <div class="upload-frame-box">
-   
+<div id="uploadFrameModal" class="modal">
 
-    <iframe id="certViewer" src="upload.html" frameborder="0"></iframe>
+  <div class="modal-box upload-frame-box">
+
+    <iframe src="upload.html" id="uploadFrame"></iframe>
 
   </div>
 
 </div>
 
-<!-- Edit Profile Modal -->
-<div id="profileModal" class="modal">
 
-  <div class="modal-box">
-    <span class="close-frame" onclick="closeProfile()">×</span>
 
-    <h3>Edit Profile</h3>
+<!-- EDIT PROFILE -->
 
-    <input id="profileName" placeholder="Your Name">
-    <br><br>
-    <button onclick="saveProfile()">Save</button>
-  </div>
+<div class="modal" id="editModal">
+
+<div class="modal-box">
+
+<span class="close-btn" onclick="closeProfile()">✕</span>
+
+<h2>Edit Profile</h2>
+
+<input type="text" id="editName" class="input-field">
+
+<button onclick="saveProfile()" class="save-btn">Save</button>
 
 </div>
+
+</div>
+
+
 
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script src="firebase.js"></script>
+
 <script src="theme.js"></script>
+
 <script src="dashboard.js"></script>
 
 </body>
