@@ -26,9 +26,9 @@ body {
 }
 
 /* BUTTONS */
-.actions {
-  display: flex;
-  gap: 14px;
+.top-actions{
+display:flex;
+gap:14px;
 }
 
 .btn {
@@ -51,7 +51,7 @@ body {
 
 /* ================= HERO ================= */
 .hero {
-  height: calc(100vh - 110px);
+  min-height: calc(100vh - 110px);
   padding: 40px 80px;
   display: flex;
   align-items: center;
@@ -85,11 +85,10 @@ body {
   font-size: 16px;
 }
 
-/* RIGHT IMAGE */
-.hero-right img {
-  width: 1500px;
-  max-width: 100%;
-  height: auto;
+.hero-right img{
+  width:100%;
+  max-width:800px;
+  height:auto;
 }
 
 /* ================= RESPONSIVE ================= */
@@ -153,4 +152,51 @@ color:#38bdf8;
 body.dark h1,
 body.dark p{
 color:white;
+}
+/* TABLET */
+@media (max-width:1024px){
+
+.hero{
+gap:40px;
+padding:40px;
+}
+
+.hero-right img{
+width:100%;
+max-width:600px;
+}
+
+}
+
+/* MOBILE */
+@media (max-width:768px){
+
+.header{
+flex-direction:column;
+height:auto;
+padding:20px;
+gap:10px;
+}
+
+.hero{
+flex-direction:column;
+text-align:center;
+padding:40px 20px;
+height:auto;
+}
+
+.hero-left{
+max-width:100%;
+}
+
+.hero-right img{
+width:100%;
+max-width:350px;
+margin-top:30px;
+}
+
+.logo img{
+height:70px;
+}
+
 }
