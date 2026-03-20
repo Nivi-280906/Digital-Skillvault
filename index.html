@@ -1,47 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google Verification -->
   <meta name="google-site-verification" content="X4-YBgGOxJwtYml8..." />
 
-  <meta charset="UTF-8">
-  <title>SkillVault</title>
+  <!-- Basic -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- ✅ TITLE (Google heading) -->
+  <!-- Title -->
   <title>SkillVault | Digital Skill Portfolio</title>
 
-  <!-- ✅ DESCRIPTION (Google small text) -->
+  <!-- SEO -->
   <meta name="description" content="SkillVault is a digital skill portfolio platform where students can store certificates, showcase projects, and share verified skills with recruiters.">
-
-  <!-- ✅ KEYWORDS (optional but ok) -->
   <meta name="keywords" content="SkillVault, digital portfolio, student portfolio, skills, certificates, projects">
-
   <meta name="author" content="Nivetha K">
-
-  <!-- ✅ CANONICAL -->
-  <link rel="canonical" href="https://digital-skillvault.vercel.app/">
-
-  <!-- ✅ ROBOTS -->
   <meta name="robots" content="index, follow">
 
-  <!-- ✅ OPEN GRAPH (for preview) -->
+  <!-- Canonical -->
+  <link rel="canonical" href="https://digital-skillvault.vercel.app/">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/style.css">
+
+  <!-- Favicon -->
+  <link rel="icon" href="/image/favicon.png">
+
+  <!-- Open Graph -->
   <meta property="og:title" content="SkillVault | Digital Skill Portfolio">
   <meta property="og:description" content="Store certificates, showcase projects, and share verified skills with recruiters.">
   <meta property="og:image" content="https://digital-skillvault.vercel.app/image/logo.png">
   <meta property="og:url" content="https://digital-skillvault.vercel.app/">
   <meta property="og:type" content="website">
 
-  <!-- ✅ TWITTER -->
+  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="SkillVault | Digital Skill Portfolio">
   <meta name="twitter:description" content="Create your digital skill portfolio and share it with recruiters.">
   <meta name="twitter:image" content="https://digital-skillvault.vercel.app/image/logo.png">
 
-  <!-- ✅ FAVICON -->
-  <link rel="icon" href="https://digital-skillvault.vercel.app/image/logo.png">
-
-  <!-- ✅ STRUCTURED DATA -->
+  <!-- Structured Data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -58,12 +56,12 @@
 <!-- HEADER -->
 <header class="header">
   <div class="logo">
-    <img src="./image/logo.png" alt="SkillVault Logo">
+    <img src="/image/logo.png" alt="SkillVault Logo" width="60">
   </div>
 
   <div class="top-actions">
-    <a href="login.html" class="btn-outline">Log In</a>
-    <a href="signup.html" class="btn">Sign Up</a>
+    <a href="/login.html" class="btn-outline">Log In</a>
+    <a href="/signup.html" class="btn">Sign Up</a>
   </div>
 </header>
 
@@ -77,22 +75,21 @@
 
     <p>
       Store certificates, projects, and credentials securely.
-      Share verified skill proofs with recruiters using
-      controlled access links.
+      Share verified skill proofs with recruiters using controlled access links.
     </p>
 
-    <a href="signup.html" class="btn big">Get Started</a>
+    <a href="/signup.html" class="btn big">Get Started</a>
   </div>
 
   <div class="hero-right">
-    <img src="./image/hero.png" alt="SkillVault digital skill portfolio dashboard illustration">
+    <img src="/image/hero.png" alt="SkillVault dashboard" width="400">
   </div>
 </section>
 
 <!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-<script src="./firebase.js"></script>
+<script src="/firebase.js"></script>
 
 </body>
 </html>
