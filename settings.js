@@ -1,3 +1,11 @@
+// APPLY SAVED THEME
+document.addEventListener("DOMContentLoaded", () =>
+{
+  const theme = localStorage.getItem("theme") || "light";
+
+  document.body.classList.remove("light","dark");
+  document.body.classList.add(theme);
+});
 // LOAD SETTINGS OR DEFAULT
 let settings = JSON.parse(localStorage.getItem("settings")) || {
   recycleBin: true,

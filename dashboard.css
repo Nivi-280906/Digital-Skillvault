@@ -375,7 +375,71 @@ transform:translate(-50%,-50%);
 font-weight:700;
 color:#0ea5e9;
 }
+/* ========================================
+   EDIT PROFILE MODAL (PRO VERSION)
+======================================== */
 
+.profile-box {
+  width: 400px !important;
+  height: auto !important;
+  padding: 25px !important;
+  border-radius: 16px;
+}
+
+/* HEADER */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modal-header h2 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* BODY */
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* LABEL */
+.modal-body label {
+  font-size: 14px;
+  color: #64748b;
+}
+
+/* INPUT */
+.modal-body input {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+}
+
+/* BUTTON IMPROVE */
+.modal-body .save-btn {
+  margin-top: 10px;
+  padding: 12px;
+  width: 100%;
+}
+
+.modal-box {
+  animation: popup 0.25s ease;
+}
+
+@keyframes popup {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
 
 /* ========================================
    LEGEND

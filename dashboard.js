@@ -482,16 +482,12 @@ alert(err.message);
  SETTINGS
 *************************/
 
-function toggleSettings()
+function toggleSettings(e)
 {
+  e.stopPropagation(); // prevent closing immediately
 
-settingsBox.style.display =
-settingsBox.style.display==="block"
-? "none"
-: "block";
-
+  settingsBox.classList.toggle("show");
 }
-
 
 /*************************
  LOGOUT
@@ -564,3 +560,41 @@ if(event.target === editModal)
 closeProfile();
 }
 );
+// Close when clicking outside
+document.addEventListener("click", function () {
+  settingsBox.classList.remove("show");
+});
+
+// Prevent closing when clicking inside dropdown
+settingsBox.addEventListener("click", function (e) {
+  e.stopPropagation();
+});
+function closeSettings()
+{
+  settingsBox.classList.remove("show");
+}
+function changePassword()
+{
+  const user = auth.currentUser;
+
+  if (!user)
+  {
+    alert("User not logged in");
+    return;
+  }
+
+  const email = user.email;
+
+  auth.sendPasswordResetEmail(email)
+  .then(() =>
+  {
+    alert("Password reset email sent. Check your inbox.");
+  })
+  .catch(err =>
+  {
+    alert(err.message);
+  });
+
+  // close dropdown after click
+  closeSettings();
+}

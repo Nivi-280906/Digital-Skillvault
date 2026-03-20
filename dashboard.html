@@ -75,16 +75,14 @@
 <img
 src="https://cdn-icons-png.flaticon.com/512/3524/3524659.png"
 class="gear"
-onclick="toggleSettings()"
+onclick="toggleSettings(event)"
 >
 
 <div id="settingsBox" class="settings">
 
-<div onclick="openProfile()">✏ Edit Profile</div>
-
-<div onclick="changePassword()">🔐 Change Password</div>
-
-<div onclick="toggleTheme()">🌙 Theme</div>
+<div onclick="openProfile(); closeSettings()">✏ Edit Profile</div>
+<div onclick="changePassword(); closeSettings()">🔐 Change Password</div>
+<div onclick="toggleTheme(); closeSettings()">🌙 Theme</div>
 
 </div>
 
@@ -192,25 +190,29 @@ Inactive
 </div>
 
 
-
-<!-- EDIT PROFILE -->
-
 <div class="modal" id="editModal">
 
-<div class="modal-box">
+  <div class="modal-box profile-box">
 
-<span class="close-btn" onclick="closeProfile()">✕</span>
+    <div class="modal-header">
+      <h2>Edit Profile</h2>
+      <span class="close-btn" onclick="closeProfile()">✕</span>
+    </div>
 
-<h2>Edit Profile</h2>
+    <div class="modal-body">
 
-<input type="text" id="editName" class="input-field">
+      <label>Full Name</label>
+      <input type="text" id="editName" class="input-field">
 
-<button onclick="saveProfile()" class="save-btn">Save</button>
+      <button onclick="saveProfile()" class="save-btn">
+        Save Changes
+      </button>
+
+    </div>
+
+  </div>
 
 </div>
-
-</div>
-
 
 
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>

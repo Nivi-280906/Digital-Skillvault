@@ -16,23 +16,25 @@ document.addEventListener("DOMContentLoaded", function()
 });
 
 
-// TOGGLE THEME
 function toggleTheme()
 {
     document.body.classList.toggle("dark");
 
-    if(document.body.classList.contains("dark"))
-    {
-        localStorage.setItem("theme","dark");
-    }
-    else
-    {
-        localStorage.setItem("theme","light");
-    }
+    const isDark = document.body.classList.contains("dark");
+
+    // save theme
+    localStorage.setItem("theme", isDark ? "dark" : "light");
 
     updateIcon();
-}
 
+    // 🔥 IMPORTANT: update iframe (upload modal)
+    const iframe = document.getElementById("uploadFrame");
+
+    if (iframe && iframe.contentWindow)
+    {
+        iframe.contentWindow.document.body.classList.toggle("dark", isDark);
+    }
+}
 
 // UPDATE ICON
 function updateIcon()

@@ -173,3 +173,62 @@ cursor:pointer;
 .backup-btn:hover{
 box-shadow:0 10px 25px rgba(14,165,233,.3);
 }
+/* ================= DARK MODE ================= */
+
+body.dark {
+  background:#020617;
+  color:#e2e8f0;
+}
+
+/* SIDEBAR */
+body.dark .sidebar {
+  background:#020617;
+  border-right:1px solid #1e293b;
+}
+
+body.dark .sidebar nav a {
+  color:#cbd5e1;
+}
+
+body.dark .sidebar nav a:hover,
+body.dark .sidebar nav a.active {
+  background:#1e293b;
+  color:#38bdf8;
+}
+
+body.dark .bottom a {
+  background:#1e293b;
+  color:#e2e8f0;
+}
+
+/* SETTINGS CARD */
+body.dark .settings-card {
+  background:#0f172a;
+  border:1px solid #1e293b;
+  color:#e2e8f0;
+}
+
+/* TEXT */
+body.dark .subtitle,
+body.dark .setting-desc {
+  color:#94a3b8;
+}
+
+/* ROW BORDER */
+body.dark .setting-row {
+  border-bottom:1px solid #1e293b;
+}
+
+/* SWITCH */
+body.dark .slider {
+  background:#334155;
+}
+
+body.dark .switch input:checked + .slider {
+  background:#38bdf8;
+}
+
+/* BUTTON */
+body.dark .backup-btn {
+  background:linear-gradient(135deg,#0284c7,#38bdf8);
+}

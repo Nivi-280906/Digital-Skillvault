@@ -310,3 +310,6 @@ background:linear-gradient(135deg,#0284c7,#38bdf8);
 color:white;
 
 }
+html, body {
+  background: transparent !important;
+}
