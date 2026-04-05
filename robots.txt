@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /login.html
+Disallow: /signup.html
+
+Sitemap: https://digital-skillvault.vercel.app/sitemap.xml

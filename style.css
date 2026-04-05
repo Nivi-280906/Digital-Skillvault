@@ -178,13 +178,13 @@ padding:20px;
 gap:10px;
 }
 
-.hero{
-flex-direction:column;
-text-align:center;
-padding:40px 20px;
-height:auto;
+.hero {
+  padding: 60px 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 80px;
 }
-
 .hero-left{
 max-width:100%;
 }
