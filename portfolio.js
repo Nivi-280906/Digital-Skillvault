@@ -175,10 +175,7 @@ function shareCert(certId, fileURL)
     currentCertId = certId;
     currentFileURL = fileURL;
 
-    const link =
-    window.location.origin +
-    "/frontend/viewer.html?cert=" +
-    certId;
+    const link = window.location.origin + "/viewer.html?cert=" + certId;
 
     shareLink.value = link;
 
